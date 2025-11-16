@@ -5,6 +5,7 @@
 *.png
 *.bmp
 *.tiff
+*.dng
 
 # Vidéos
 *.mp4
