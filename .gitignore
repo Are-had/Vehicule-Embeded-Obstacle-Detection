@@ -1,0 +1,13 @@
+# Python files
+__pycache__/
+*.py[cod]
+
+# Data and Images (Do not upload these to GitHub)
+data/
+test-imqges/
+*.jpg
+*.csv
+
+# Environment
+myenv/
+.venv/

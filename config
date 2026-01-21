@@ -1,0 +1,14 @@
+# --- NETWORK SETTINGS ---
+GPU_URL = "https://pertly-nonhygrometric-sonny.ngrok-free.dev"
+REQUEST_TIMEOUT = 30  # seconds
+
+# --- HARDWARE SETTINGS (GPS) ---
+SERIAL_PORT = "/dev/serial0"
+BAUD_RATE = 9600
+
+# --- DIRECTORIES ---
+IMAGE_STORAGE_PATH = "test-imqges"
+DATA_LOG_PATH = "data"
+
+# --- SYSTEM FLAGS ---
+SIMULATION_MODE = True
