@@ -1,65 +1,75 @@
 import os
 import pandas as pd
-import cv2
 import shutil
 import json
+import time
 
-# Paths
+# Configuration Paths
 CSV_PATH = "demo_data/gps_data.csv"
 LEFT_IMG_DIR = "demo_data/images_left"
 RIGHT_IMG_DIR = "demo_data/images_right"
 TEMP_BUFFER = "temp_buffer"
 
-# Ensure temp folder exists
-os.makedirs(TEMP_BUFFER, exist_ok=True)
+# Ensure the temporary buffer folder exists
+if not os.path.exists(TEMP_BUFFER):
+    os.makedirs(TEMP_BUFFER)
 
-def should_send_data(lat, lon, frame_id):
-    """
-    Step 1 Logic: Decide if we should send this frame.
-    Example: You could send every 5th frame, or only if moving.
-    """
-    # For now, let's say we send every frame for the demo
-    return True
-
-def prepare_data_for_sending():
+def prepare_demo_tasks():
     # 1. Load the GPS CSV
     try:
         df = pd.read_csv(CSV_PATH)
     except Exception as e:
-        print(f"Error reading CSV: {e}")
+        print("Error reading CSV file:", str(e))
         return
 
-    print(f"Starting Demo Data Loader... {len(df)} frames found.")
+    print("Starting Demo Data Loader...")
+    print(str(len(df)) + " frames found in CSV.")
 
     for index, row in df.iterrows():
-        # Assuming your CSV has columns: frame_name, latitude, longitude
-        frame_name = row['frame_name'] 
+        # Get data from CSV row
+        # frame_name is '..._leftImg8bit.jpg'
+        left_filename = str(row['frame_name'])
         lat = row['latitude']
         lon = row['longitude']
 
-        if should_send_data(lat, lon, frame_name):
-            # Paths to the actual images
-            left_path = os.path.join(LEFT_IMG_DIR, f"{frame_name}_left.jpg")
-            right_path = os.path.join(RIGHT_IMG_DIR, f"{frame_name}_right.jpg")
+        # Determine the matching Right filename
+        # This replaces the first 'left' with 'right'
+        right_filename = left_filename.replace("left", "right")
 
-            if os.path.exists(left_path) and os.path.exists(right_path):
-                # Create a unique subfolder in temp_buffer for this specific capture
-                capture_id = f"cap_{index}_{int(os.time.time())}"
-                task_folder = os.path.join(TEMP_BUFFER, capture_id)
-                os.makedirs(task_folder, exist_ok=True)
+        # Define full source paths
+        left_src = os.path.join(LEFT_IMG_DIR, left_filename)
+        right_src = os.path.join(RIGHT_IMG_DIR, right_filename)
 
-                # 1. Copy Images to Temp
-                shutil.copy(left_path, os.path.join(task_folder, "left.jpg"))
-                shutil.copy(right_path, os.path.join(task_folder, "right.jpg"))
+        # Check if both files exist before moving to buffer
+        if os.path.exists(left_src) and os.path.exists(right_src):
+            # Create a unique subfolder for this specific capture
+            # Using index to keep the sequence order
+            task_id = "task_" + str(index).zfill(4)
+            task_folder = os.path.join(TEMP_BUFFER, task_id)
+            
+            if not os.path.exists(task_folder):
+                os.makedirs(task_folder)
 
-                # 2. Save GPS as a small JSON file
-                gps_info = {"lat": lat, "lon": lon, "frame": frame_name}
-                with open(os.path.join(task_folder, "gps.json"), "w") as f:
-                    json.dump(gps_info, f)
+            # Copy images to the buffer
+            shutil.copy(left_src, os.path.join(task_folder, "left.jpg"))
+            shutil.copy(right_src, os.path.join(task_folder, "right.jpg"))
 
-                print(f"Prepared Task: {capture_id} (Lat: {lat}, Lon: {lon})")
-            else:
-                print(f"Warning: Images for {frame_name} not found.")
+            # Save GPS data to a JSON file inside the task folder
+            gps_info = {
+                "lat": lat,
+                "lon": lon,
+                "frame": left_filename
+            }
+            with open(os.path.join(task_folder, "gps.json"), "w") as f:
+                json.dump(gps_info, f)
+
+            print("Done: " + left_filename + " -> Buffered in " + task_id)
+        else:
+            print("Warning: Files missing for " + left_filename)
+            if not os.path.exists(left_src):
+                print("   Missing Left: " + left_src)
+            if not os.path.exists(right_src):
+                print("   Missing Right: " + right_src)
 
 if __name__ == "__main__":
-    prepare_data_for_sending()
+    prepare_demo_tasks()
