@@ -1,5 +1,2 @@
-﻿massyl/datasets
-raspberry/datasets
+﻿*.onnx
 massyl/data/lost_and_found_left_od_optimized
-*.pt
-*.onnx
