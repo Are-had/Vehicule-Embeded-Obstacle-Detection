@@ -2,3 +2,4 @@
 raspberry/datasets
 massyl/data/lost_and_found_left_od_optimized
 *.pt
+*.onnx
