@@ -1,66 +1,95 @@
 import serial
 import pynmea2
 import time
+import csv
+import os
 
-# Configuration du port pour le Raspberry Pi 5
-port = "/dev/serial0"
-baud = 9600
+# CHANGEMENT ICI : On utilise le port qui fonctionne avec cat
+PORT = "/dev/ttyAMA0"
+BAUD = 9600
+
+CSV_FILE = "gps_positions.csv"
+
+def append_to_csv(timestamp, lat, lon, num_sats, fix_type):
+    file_exists = os.path.isfile(CSV_FILE)
+
+    with open(CSV_FILE, mode="a", newline="") as f:
+        writer = csv.writer(f)
+
+        if not file_exists:
+            writer.writerow(["timestamp", "latitude", "longitude", "num_sats", "fix_type", "google_maps"])
+
+        maps_url = f"https://www.google.com/maps?q={lat},{lon}"
+        writer.writerow([timestamp, lat, lon, num_sats, fix_type, maps_url])
 
 def run_gps_analysis():
     try:
-        ser = serial.Serial(port, baudrate=baud, timeout=1)
-        print("--- Demarrage du diagnostic GPS ---")
-        
+        # Ouverture du port série
+        ser = serial.Serial(PORT, baudrate=BAUD, timeout=1)
+        print(f"--- Diagnostic GPS démarré sur {PORT} ---")
+
+        last_lat, last_lon = None, None
+
         while True:
             start_time = time.time()
             lat, lon, num_sats, fix_type = None, None, 0, 0
-            
-            # Lecture des donnees pendant un cycle de 2 secondes
+
+            # Lecture pendant un cycle de 2 secondes
             while time.time() < start_time + 2:
-                line = ser.readline().decode('ascii', errors='replace').strip()
-                
-                # Trame GGA : Satellites detectes et coordonnees
-                if "GGA" in line:
-                    try:
+                try:
+                    line = ser.readline().decode("ascii", errors="replace").strip()
+                    
+                    if not line:
+                        continue
+
+                    # Trame GGA : Satellites et coordonnées
+                    if "GGA" in line:
                         msg = pynmea2.parse(line)
                         num_sats = int(msg.num_sats)
                         if msg.gps_qual > 0:
                             lat, lon = msg.latitude, msg.longitude
-                    except:
-                        continue
-                
-                # Trame GSA : Satellites utilises pour le calcul
-                if "GSA" in line:
-                    try:
+
+                    # Trame GSA : Type de Fix
+                    if "GSA" in line:
                         msg = pynmea2.parse(line)
                         fix_type = int(msg.mode_fix_type)
-                    except:
-                        continue
+                        
+                except Exception:
+                    continue
 
-            # Affichage des resultats
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+
             print("------------------------------")
-            print("Temps: " + time.strftime("%H:%M:%S"))
-            
+            print("Temps:", timestamp)
+
             if num_sats == 0:
                 print("Statut: No satellite detected")
             else:
-                print("Statut: " + str(num_sats) + " satellites detected")
+                print(f"Statut: {num_sats} satellites detected")
 
             if fix_type <= 1:
                 print("Fix: No satellite used")
             else:
-                print("Fix: Satellites used (Fix " + str(fix_type) + "D)")
+                print(f"Fix: Satellites used (Fix {fix_type}D)")
 
-            if lat and lon:
-                print("Position: Lat " + str(round(lat, 6)) + ", Lon " + str(round(lon, 6)))
-                # Generation du lien Google Maps
-                maps_url = "https://www.google.com/maps?q=" + str(lat) + "," + str(lon)
-                print("Google Maps: " + maps_url)
+            if lat is not None and lon is not None:
+                lat_r = round(lat, 6)
+                lon_r = round(lon, 6)
+
+                print(f"Position: Lat {lat_r} , Lon {lon_r}")
+                print(f"Google Maps: https://www.google.com/maps?q={lat_r},{lon_r}")
+
+                if (last_lat != lat_r) or (last_lon != lon_r):
+                    append_to_csv(timestamp, lat_r, lon_r, num_sats, fix_type)
+                    print(f"Ecrit dans {CSV_FILE}")
+                    last_lat, last_lon = lat_r, lon_r
+                else:
+                    print("Même position, pas d'écriture CSV")
             else:
                 print("Position: Searching for signal...")
 
     except Exception as e:
-        print("Erreur: " + str(e))
+        print("Erreur critique:", str(e))
 
 if __name__ == "__main__":
     run_gps_analysis()
