@@ -1,0 +1,18 @@
+# --- PFE Demo Data ---
+# Ignore the large image datasets
+demo_data/images_left/
+demo_data/images_right/
+
+# Ignore the temporary task buffer (we don't want to push unsent data)
+temp_buffer/
+
+# --- Python Environment & Junk ---
+__pycache__/
+*.py[cod]
+*$py.class
+my_env/
+.venv/
+
+# --- System Files ---
+.DS_Store
+Thumbs.db
