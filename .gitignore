@@ -30,6 +30,8 @@ __pycache__/
 venv/
 env/
 calibration/camera_calibrate.py
+calibration/steps.txt
+env_stereo/
 
 # IDE
 .vscode/
