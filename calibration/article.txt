@@ -1,3 +1,9 @@
 https://learnopencv.com/geometry-of-image-formation/
 
 https://learnopencv.com/camera-calibration-using-opencv/#elementor-toc__heading-anchor-5
+
+
+https://temugeb.github.io/opencv/python/2021/02/02/stereo-camera-calibration-and-triangulation.html  
+
+
+https://calib.io/pages/camera-calibration-pattern-generator
