@@ -3,19 +3,19 @@ import pandas as pd
 import shutil
 import json
 import time
+from decision_engine import should_send_data
 
 # Configuration Paths
 CSV_PATH = "demo_data/gps_data.csv"
 LEFT_IMG_DIR = "demo_data/images_left"
 RIGHT_IMG_DIR = "demo_data/images_right"
+MASK_DIR = "demo_data/flagged_masks"
 TEMP_BUFFER = "temp_buffer"
 
-# Ensure the temporary buffer folder exists
 if not os.path.exists(TEMP_BUFFER):
     os.makedirs(TEMP_BUFFER)
 
 def prepare_demo_tasks():
-    # 1. Load the GPS CSV
     try:
         df = pd.read_csv(CSV_PATH)
     except Exception as e:
@@ -26,35 +26,31 @@ def prepare_demo_tasks():
     print(str(len(df)) + " frames found in CSV.")
 
     for index, row in df.iterrows():
-        # Get data from CSV row
-        # frame_name is '..._leftImg8bit.jpg'
         left_filename = str(row['frame_name'])
         lat = row['latitude']
         lon = row['longitude']
 
-        # Determine the matching Right filename
-        # This replaces the first 'left' with 'right'
-        right_filename = left_filename.replace("left", "right")
+        if not should_send_data(left_filename):
+            continue
 
-        # Define full source paths
+        right_filename = left_filename.replace("left", "right")
+        mask_filename = "mask_" + left_filename
+
         left_src = os.path.join(LEFT_IMG_DIR, left_filename)
         right_src = os.path.join(RIGHT_IMG_DIR, right_filename)
+        mask_src = os.path.join(MASK_DIR, mask_filename)
 
-        # Check if both files exist before moving to buffer
-        if os.path.exists(left_src) and os.path.exists(right_src):
-            # Create a unique subfolder for this specific capture
-            # Using index to keep the sequence order
+        if os.path.exists(left_src) and os.path.exists(right_src) and os.path.exists(mask_src):
             task_id = "task_" + str(index).zfill(4)
             task_folder = os.path.join(TEMP_BUFFER, task_id)
-            
+
             if not os.path.exists(task_folder):
                 os.makedirs(task_folder)
 
-            # Copy images to the buffer
             shutil.copy(left_src, os.path.join(task_folder, "left.jpg"))
             shutil.copy(right_src, os.path.join(task_folder, "right.jpg"))
+            shutil.copy(mask_src, os.path.join(task_folder, "mask.jpg"))
 
-            # Save GPS data to a JSON file inside the task folder
             gps_info = {
                 "lat": lat,
                 "lon": lon,
@@ -70,6 +66,8 @@ def prepare_demo_tasks():
                 print("   Missing Left: " + left_src)
             if not os.path.exists(right_src):
                 print("   Missing Right: " + right_src)
+            if not os.path.exists(mask_src):
+                print("   Missing Mask: " + mask_src)
 
 if __name__ == "__main__":
     prepare_demo_tasks()

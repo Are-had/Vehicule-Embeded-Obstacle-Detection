@@ -1,7 +1,15 @@
-def should_send_data(lat, lon, frame_id):
-    """
-    Step 1 Logic: Decide if we should send this frame.
-    Example: You could send every 5th frame, or only if moving.
-    """
-    # For now, let's say we send every frame for the demo
-    return True
+# decision_engine.py
+
+ALLOWED_FILES = [
+    "02_Hanns_Klemm_Str_44_000000_000020_leftImg8bit.jpg",
+    "04_Maurener_Weg_8_000003_000020_leftImg8bit.jpg",
+    "02_Hanns_Klemm_Str_44_000003_000040_leftImg8bit.jpg"
+]
+
+def should_send_data(frame_id):
+    if frame_id in ALLOWED_FILES:
+        print("Frame " + frame_id + " - Will be sent")
+        return True
+    else:
+        print("Frame " + frame_id + " - Skip")
+        return False
