@@ -25,18 +25,15 @@ ORIGINAL_DIR = "data_results/original"
 PREDICTED_DIR = "data_results/predicted"
 LOG_CSV = "data_results/inference_logs.csv"
 
-
-
-
-
 # YOUR FIXED DICTIONARY
 SPECIALIZED_MODELS = {
-    "Obstacle_LAF":  {"path": "/home/imadb/Ghiles/runs/detect/train4/weights/best.pt", "color": (0, 128, 255), "conf": 25}, 
-    "RoadWorks":     {"path": "/home/imadb/runs/detect/RoadWorks2/weights/best.pt", "color": (0, 255, 0), "conf": 60}, 
-    "SpeedBumps":    {"path": "/home/imadb/runs/detect/SpeedBumps/weights/best.pt", "color": (255, 0, 0), "conf": 90}, 
-    "RoadDamage":    {"path": "/home/imadb/Ghiles/Projet_Ghiles/runs/detect/train4/weights/best.pt", "color": (255, 255, 0), "conf": 85},  
-    "RoadDebris1":   {"path": "/home/imadb/runs/detect/RoadDebris1/weights/best.pt", "color": (255, 0, 255), "conf": 40}, 
-    "RoadObstacle":  {"path": "/home/imadb/runs/detect/road_obstacle_yolov8l/weights/best.pt", "color": (0, 200, 255), "conf": 40}
+    "Obstacle_LAF":  {"path": "/home/imadb/Ghiles/runs/detect/train4/weights/best.pt", "color": (0, 128, 255)},
+    "RoadWorks":     {"path": "/home/imadb/runs/detect/RoadWorks2/weights/best.pt", "color": (0, 255, 0)},
+    "SpeedBumps":    {"path": "/home/imadb/runs/detect/SpeedBumps/weights/best.pt", "color": (255, 0, 0)},
+    "StopSign":      {"path": "/home/imadb/runs/detect/StopSign/weights/best.pt", "color": (0, 0, 255)},
+    "RoadDamage":    {"path": "/home/imadb/Ghiles/Projet_Ghiles/runs/detect/train4/weights/best.pt", "color": (255, 255, 0)},
+    "RoadDebris1":   {"path": "/home/imadb/runs/detect/RoadDebris1/weights/best.pt", "color": (255, 0, 255)},
+    "RoadObstacle":  {"path": "/home/imadb/runs/detect/road_obstacle_yolov8l/weights/best.pt", "color": (0, 200, 255)}
 }
 
 # Create directories
@@ -106,14 +103,5 @@ def get_obstacles(limit: int = 50):
 
     return {"status": "success", "data": data}
 
-@app.get("/files/{file_path:path}")
-def get_file(file_path: str):
-    full_path = os.path.join(".", file_path)
-
-    if not os.path.exists(full_path):
-        raise HTTPException(status_code=404, detail="File not found")
-
-    return FileResponse(full_path)
-
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8880)
+    uvicorn.run(app, host="0.0.0.0", port=8888)
