@@ -1,11 +1,22 @@
-﻿massyl/data/lost_and_found_left_od_optimized
+﻿# Python files
+__pycache__/
+*.py[cod]
+
+# Data and Images (Do not upload these to GitHub)
+data/
+test-imqges/
+*.jpg
+*.csv
+
+# Environment
+myenv/
+.venv/
+
+# massyl
 *.mp4
-massyl/data/bdd100k_test
-massyl/data
-massyl/results
-embeded_obstacle_detection/data
-embeded_obstacle_detection/results
 *.tar
 *.pth
 *.pt
 *.onnx
+embeded_obstacle_detection/data
+embeded_obstacle_detection/results
