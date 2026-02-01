@@ -10,7 +10,7 @@ import onnxruntime as ort
 MODEL_PATH = 'massyl/seg_models/stdc813m_maxmiou_4.onnx' 
 MODEL_NAME = os.path.basename(MODEL_PATH)
 
-VIDEO_SOURCE = 'massyl/data/lost_and_found_left_od_optimized/valid/images/*.jpg'
+VIDEO_SOURCE = 'massyl/data/final_demo_2/*.jpg'
 # VIDEO_SOURCE = 'my_drive_video.mp4'
 
 # Must match the resolution used during ONNX export

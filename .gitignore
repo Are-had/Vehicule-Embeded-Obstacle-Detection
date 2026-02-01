@@ -1,6 +1,11 @@
-﻿*.onnx
-massyl/data/lost_and_found_left_od_optimized
+﻿massyl/data/lost_and_found_left_od_optimized
 *.mp4
 massyl/data/bdd100k_test
 massyl/data
 massyl/results
+embeded_obstacle_detection/data
+embeded_obstacle_detection/results
+*.tar
+*.pth
+*.pt
+*.onnx

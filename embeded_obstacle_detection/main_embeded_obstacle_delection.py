@@ -8,7 +8,7 @@ from datetime import datetime
 # --- CONFIGURATION ---
 SEG_MODEL_PATH = "massyl/seg_models/stdc813m_maxmiou_4.onnx"
 OD_MODEL_PATH  = "massyl/od_models/yolov8s_best_2.onnx"
-VIDEO_SOURCE   = "massyl/data/final_demo/*.jpg" 
+VIDEO_SOURCE   = "massyl/data/final_demo_4/*.jpg" 
 
 # Output Settings
 LOG_FILE_PATH   = "massyl/results/flagged_frames.txt"

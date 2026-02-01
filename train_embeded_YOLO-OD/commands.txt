@@ -1,0 +1,22 @@
+train :
+
+yolo detect train \
+  model=yolov8s.pt \
+  data=/home/massyl/pfe_massyl/object_detection/dataset_obstacles_massyl/data.yaml \
+  epochs=250 \
+  imgsz=640 \
+  batch=16 \
+  device=0 \
+  project=/home/massyl/pfe_massyl/object_detection/object_detection_training \
+  name=yolov8s_hazard_v2 \
+  optimizer=SGD \
+  cos_lr=True \
+  exist_ok=True
+
+export : 
+
+yolo export \
+  model=object_detection_training/yolov8s_hazard_v1/weights/best.pt \
+  format=onnx \
+  opset=11 \
+  simplify=True

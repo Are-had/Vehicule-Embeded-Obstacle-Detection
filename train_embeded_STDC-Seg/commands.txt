@@ -1,0 +1,13 @@
+train : 
+
+export CUDA_VISIBLE_DEVICES=0
+
+torchrun --nproc_per_node=1 train.py \
+    --mode train \
+    --backbone STDCNet813 \
+    --n_workers_train 4 \
+    --n_img_per_gpu 24 \
+    --max_iter 60000 \
+    --use_boundary_8 True \
+    --pretrain_path checkpoints/STDCNet813M_73.91.tar \
+    --respath ./res_road_server_22_jan
