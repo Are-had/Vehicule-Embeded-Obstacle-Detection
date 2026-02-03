@@ -158,12 +158,11 @@ Here are the detection results from the fine-tuned models running on the server:
 <p align="center">
   <img src="detection-and-classification/evaluation/samples/result_ALL_models_combined.jpg" width="45%" title="Combined Results">
 </p>
-<p align="center">
-  <img src="detection-and-classification/evaluation/samples/result_speedbumps.jpg" width="45%" title="Speed Bump Detection">
 
 
 ---
 
 ## Third Module : Android Navigation App and User interface
+
 
 
