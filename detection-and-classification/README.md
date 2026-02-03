@@ -8,7 +8,7 @@ Le projet fait actuellement l objet d une analyse plus approfondie sur serveur h
 
 ## Organisation du Depot
 
-- datasets/ : Fichiers de configuration YAML pour la gestion des donnees (BDD100K, Road Damage, Lost and Found).
+- datasets/ : Fichiers de configuration YAML pour la gestion des donnees (Road Damage, Lost and Found ...).
 - detection-and-classification/ :
     - training/ : Scripts d entrainement pour les modeles YOLOv8 (Nano et Large).
     - inference/ : Notebooks de test pour la validation sur flux reels.
@@ -28,3 +28,4 @@ Pour configurer l environnement :
 pip install -r requirements.txt
 
 Les donnees de sortie et les preuves visuelles de performance sont repertoriees dans le dossier evaluation/samples/.
+
