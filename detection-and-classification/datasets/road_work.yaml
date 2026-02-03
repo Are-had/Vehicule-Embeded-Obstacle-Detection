@@ -1,0 +1,7 @@
+# Source: Roboflow more-accidents
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['Arrow Board', 'cones']

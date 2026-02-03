@@ -1,0 +1,7 @@
+# Roboflow: fallen-object / road-debris-iya6s-a4hkr
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['object']

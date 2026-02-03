@@ -1,0 +1,6 @@
+path: /home/imadb/.cache/kagglehub/datasets/solesensei/solesensei_bdd100k/versions/2/bdd100k/bdd100k
+train: images/100k/train
+val: images/100k/val
+
+nc: 10
+names: ['person', 'rider', 'car', 'bus', 'truck', 'bike', 'motor', 'traffic light', 'traffic sign', 'train']

@@ -1,0 +1,7 @@
+path: "/home/imadb/Ghiles/stop_signn/stop signs"
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 1
+names: ['Stop']
