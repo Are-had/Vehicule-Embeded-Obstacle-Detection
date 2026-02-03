@@ -122,7 +122,7 @@ Conversion from PyTorch (`.pt`) to Hailo Executable Format (`.hef`):
 3. **Compilation**: Using Hailo Dataflow Compiler for graph optimization and resource allocation.
 
 ## Second Module : Cloud AI and Depth Analysis
-## Second Module: Cloud AI Analysis & Model Specialization
+### Part 1: Cloud AI Analysis & Model Specialization
 
 This module acts as the high-performance validation engine. It processes flagged data from the vehicles using specialized server-side models to ensure maximum detection reliability.
 
@@ -163,6 +163,7 @@ Here are the detection results from the fine-tuned models running on the server:
 ---
 
 ## Third Module : Android Navigation App and User interface
+
 
 
 
