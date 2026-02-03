@@ -122,5 +122,53 @@ Conversion from PyTorch (`.pt`) to Hailo Executable Format (`.hef`):
 3. **Compilation**: Using Hailo Dataflow Compiler for graph optimization and resource allocation.
 
 ## Second Module : Cloud AI and Depth Analysis
+## Second Module: Cloud AI Analysis, Model Training & Data Management
+
+Ce module constitue le "cerveau" de traitement haute performance du projet. Il assure la réception des données provenant des unités embarquées, leur validation par des modèles complexes et la gestion de la base de données des obstacles.
+
+### Key Technical Contributions (Ghiles Redjdal)
+
+- **Backend Architecture**: Mise en place de l'infrastructure serveur pour la réception et le stockage des trames signalées par les véhicules.
+- **Dual-Model Refinement Pipeline**: Développement d'un système de double vérification où chaque image reçue est analysée par deux processus distincts :
+    1. **Détection de précision** : Utilisation d'un modèle YOLOv8 Large pour confirmer la présence de l'obstacle.
+    2. **Classification spécialisée** : Analyse fine de la catégorie de l'obstacle pour éliminer les faux positifs.
+- **Dataset Engineering & Multi-Task Fine-tuning**: Responsable de la préparation et de l'entraînement des modèles sur plusieurs jeux de données mondiaux, adaptés aux conditions routières réelles.
+
+### Server-Side Model Training & Evaluation
+
+Pour garantir une validation ultra-précise, j'ai réalisé un fine-tuning séparé pour chaque catégorie d'obstacles. Cela permet au système de maintenir une grande fiabilité malgré la diversité des dangers (débris, signalisation, dégradations).
+
+#### 1. Datasets et Classes ciblées
+Voici le détail des jeux de données que j'ai intégrés et les classes spécifiques entraînées :
+
+| **Dataset** | **Classes Principales** | **Rôle dans le Projet** |
+| :--- | :--- | :--- |
+| **Lost and Found** | Débris, boîtes, objets divers | Détection d'obstacles inhabituels sur la chaussée. |
+| **BDD100K** | Panneaux Stop, feux, zones de travaux | Validation de l'infrastructure et sécurité routière. |
+| **Road Damage** | Nids-de-poule, fissures, dégradations | Identification des anomalies de la surface de la route. |
+| **Custom Combined** | Dos d'âne, signalisation temporaire | Modèle de synthèse pour la validation finale. |
+
+#### 2. Métriques de Performance (Validation Serveur)
+Chaque modèle a été évalué avec les métriques standards YOLO pour garantir sa robustesse avant le déploiement.
+
+| **Catégorie de Modèle** | **mAP@50** | **Précision** | **Rappel** | **État** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Débris Routiers (L&F)** | **0.72** | 0.75 | 0.68 | Déployé |
+| **Signalisation (BDD)** | **0.84** | 0.82 | 0.80 | Déployé |
+| **Anomalies de Chaussée** | **0.65** | 0.63 | 0.61 | En test |
+| **Infrastructure Globale** | **0.78** | 0.76 | 0.74 | Déployé |
+
+### Visual Demonstrations (Inférence Serveur)
+Voici quelques exemples de résultats obtenus par les modèles que j'ai fine-tunés sur le serveur :
+
+<p align="center">
+  <img src="detection-and-classification/evaluation/samples/result_ALL_models_combined.jpg" width="45%" title="Résultats Modèles Combinés">
+  <img src="detection-and-classification/evaluation/samples/result_roadworks.jpg" width="45%" title="Détection Zones de Travaux">
+</p>
+<p align="center">
+  <img src="detection-and-classification/evaluation/samples/result_speedbumps.jpg" width="45%" title="Détection Dos d'âne">
+  <img src="detection-and-classification/evaluation/samples/result_stopsign.jpg" width="45%" title="Détection Panneau Stop">
+</p>
 
 ## Third Module : Android Navigation App and User interface
+
