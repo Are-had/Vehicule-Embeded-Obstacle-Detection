@@ -8,7 +8,7 @@ The project is currently undergoing an in-depth analysis on a high-performance G
 
 ## Repository Structure
 
-- datasets/: YAML configuration files for data management (BDD100K, Road Damage, Lost and Found).
+- datasets/: YAML configuration files for data management ( Road Damage, Lost and Found.....).
 - detection-and-classification/:
     - training/: Training scripts for YOLOv8 models (Nano and Large versions).
     - inference/: Test notebooks for validation on real-world data streams.
@@ -28,3 +28,4 @@ To configure the environment:
 pip install -r requirements.txt
 
 Output data and visual performance evidence are listed in the evaluation/samples/ directory.
+
