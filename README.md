@@ -126,7 +126,7 @@ Conversion from PyTorch (`.pt`) to Hailo Executable Format (`.hef`):
 
 This module acts as the high-performance validation engine. It processes flagged data from the vehicles using specialized server-side models to ensure maximum detection reliability.
 
-### Key Technical Contributions (Ghiles Redjdal)
+### Key Technical Contributions 
 
 - **Backend Infrastructure**: Built the server-side pipeline to receive, manage, and store hazard data transmitted from the embedded units.
 - **Server-Side Validation**: Implemented a "Confirm-and-Classify" logic using high-precision YOLOv8 weights (FP32) to verify detections and eliminate false positives.
@@ -149,7 +149,7 @@ Each model was fine-tuned and evaluated separately to achieve the best possible 
 | :--- | :--- | :--- | :--- | :--- |
 | **Road Debris (L&F)** | **0.72** | 0.75 | 0.68 | Deployed |
 | **Traffic Signs (BDD)** | **0.84** | 0.82 | 0.80 | Deployed |
-| **Road Surface** | **0.65** | 0.63 | 0.61 | Testing |
+| **Road Surface** | **0.65** | 0.63 | 0.61 | Deployed|
 | **Infrastructure** | **0.78** | 0.76 | 0.74 | Deployed |
 
 ### Visual Performance Results
@@ -157,14 +157,13 @@ Here are the detection results from the fine-tuned models running on the server:
 
 <p align="center">
   <img src="detection-and-classification/evaluation/samples/result_ALL_models_combined.jpg" width="45%" title="Combined Results">
-  <img src="detection-and-classification/evaluation/samples/result_roadworks.jpg" width="45%" title="Roadworks Detection">
 </p>
 <p align="center">
   <img src="detection-and-classification/evaluation/samples/result_speedbumps.jpg" width="45%" title="Speed Bump Detection">
-  <img src="detection-and-classification/evaluation/samples/result_stopsign.jpg" width="45%" title="Stop Sign Detection">
-</p>
+
 
 ---
 
 ## Third Module : Android Navigation App and User interface
+
 
