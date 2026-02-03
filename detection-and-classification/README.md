@@ -1,31 +1,30 @@
-# Projet de Detection d Obstacles pour Vehicules Autonomes
+# Obstacle Detection Project for Autonomous Vehicles
 
-Ce depot regroupe les travaux de developpement lies a la detection et a la classification d obstacles routiers via l architecture YOLOv8.
+This repository gathers the development work related to the detection and classification of road obstacles using the YOLOv8 architecture.
 
-## Etat de l Analyse
+## Analysis Status
 
-Le projet fait actuellement l objet d une analyse plus approfondie sur serveur haute performance (GPU). Cette phase permet de traiter des volumes de donnees plus importants et d affiner la precision des poids. Des modeles plus performants, optimises pour la detection de petits objets et la reduction des faux positifs, sont en cours de deploiement.
+The project is currently undergoing an in-depth analysis on a high-performance GPU server. This phase allows for processing larger data volumes and refining weight precision. More performant models, optimized for small object detection and false positive reduction, are currently being deployed.
 
-## Organisation du Depot
+## Repository Structure
 
-- datasets/ : Fichiers de configuration YAML pour la gestion des donnees (Road Damage, Lost and Found ...).
-- detection-and-classification/ :
-    - training/ : Scripts d entrainement pour les modeles YOLOv8 (Nano et Large).
-    - inference/ : Notebooks de test pour la validation sur flux reels.
-    - evaluation/ : Analyse detaillee des metriques (mAP, matrices de confusion) et dossier samples contenant les echantillons de resultats.
-    - utils/ : Scripts de conversion de formats d annotations et outils de pretraitement.
+- datasets/: YAML configuration files for data management (BDD100K, Road Damage, Lost and Found).
+- detection-and-classification/:
+    - training/: Training scripts for YOLOv8 models (Nano and Large versions).
+    - inference/: Test notebooks for validation on real-world data streams.
+    - evaluation/: Detailed metrics analysis (mAP, confusion matrices) and a samples folder containing detection result highlights.
+    - utils/: Annotation format conversion scripts and preprocessing tools.
 
-## Objectifs Principaux
+## Main Objectives
 
-1. Analyse et detection de debris routiers.
-2. Reconnaissance de la signalisation (Stop, Travaux).
-3. Identification des anomalies de la chaussee (Dos d ane).
-4. Benchmarking des performances sur serveur pour une future integration embarquee.
+1. Analysis and detection of road debris.
+2. Recognition of specific signage (Stop signs, Roadworks).
+3. Identification of road anomalies (Speed bumps).
+4. Server-side performance benchmarking for future embedded system integration.
 
 ## Installation
 
-Pour configurer l environnement :
+To configure the environment:
 pip install -r requirements.txt
 
-Les donnees de sortie et les preuves visuelles de performance sont repertoriees dans le dossier evaluation/samples/.
-
+Output data and visual performance evidence are listed in the evaluation/samples/ directory.
