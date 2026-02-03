@@ -1,0 +1,21 @@
+# Core YOLOv8 & Vision
+ultralytics
+torch
+torchvision
+opencv-python
+
+# Data & Math
+numpy
+pandas
+PyYAML
+scipy
+tqdm
+Pillow
+
+# Plotting & Analysis
+matplotlib
+seaborn
+
+# Notebook & Utils
+ipython
+psutil

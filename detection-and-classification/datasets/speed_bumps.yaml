@@ -1,0 +1,7 @@
+path: "/home/imadb/Ghiles/Speed bumps detection/Speed bumps detection"
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 2
+names: ['speed-bump', 'unmarked-speed-bump']

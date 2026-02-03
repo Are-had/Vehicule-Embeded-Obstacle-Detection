@@ -1,0 +1,7 @@
+# Roboflow: lulu-atjgh / road-debris-iya6s-wot02-kjpwr
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['object']

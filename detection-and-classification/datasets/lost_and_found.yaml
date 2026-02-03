@@ -1,0 +1,7 @@
+path: /home/imadb/Ghiles/lost_and_found_od_yolo
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 1
+names: ["obstacle_lost"]

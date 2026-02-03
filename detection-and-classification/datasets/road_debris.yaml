@@ -1,0 +1,8 @@
+# Dataset combiné (Garbage, Road block, Fallen tree)
+path: /home/imadb/Ghiles/final_dataset/final_dataset
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 3
+names: ['garbage', 'road_block', 'fallen_tree']

@@ -1,0 +1,7 @@
+path: /home/imadb/Ghiles/road_damage # À vérifier selon ton dossier réel
+train: images/train
+val: images/val
+test: images/test
+
+nc: 4
+names: ['pothole', 'alligator_cracking', 'lateral_cracking', 'longitudinal_cracking']
