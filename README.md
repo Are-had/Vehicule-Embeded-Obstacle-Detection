@@ -12,7 +12,7 @@ This repository focuses on the **Embedded Detection Module**: a lightweight, pow
 
 - **Massyl Adjal**: Embedded AI, Computer Vision, Model Optimization.
 
-- **Ghiles Redjdal**:Cloud AI Pipeline, Model Fine-tuning & Data Engineering.
+- **Ghiles Redjdal**: Cloud AI Pipeline, Model Fine-tuning & Data Engineering.
 
 - **Imad Bafou**: Database Management,  Documentation.
 
@@ -163,6 +163,7 @@ Here are the detection results from the fine-tuned models running on the server:
 ---
 
 ## Third Module : Android Navigation App and User interface
+
 
 
 
