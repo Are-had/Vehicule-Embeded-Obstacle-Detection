@@ -27,11 +27,12 @@ class InferenceEngine:
     def run_inference(self, image_path, frame_id):
         img = cv2.imread(image_path)
         if img is None:
-            return [], 0, None
+            return [], 0, None, []
             
         annotated_img = img.copy()
         start_time = time.time()
         all_labels = []
+        all_bboxes = []  # NEW
         
         for name, model in self.loaded_models.items():
             model_color = self.models_info[name]["color"]
@@ -43,6 +44,14 @@ class InferenceEngine:
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
                 label = results[0].names[int(box.cls)]
                 conf = float(box.conf)
+                
+                # Save bbox info
+                all_bboxes.append({
+                    "x1": x1, "y1": y1, "x2": x2, "y2": y2,
+                    "label": label,
+                    "confidence": conf,
+                    "model": name
+                })
                 
                 cv2.rectangle(annotated_img, (x1, y1), (x2, y2), model_color, 3)
                 
@@ -60,4 +69,4 @@ class InferenceEngine:
         save_path = os.path.join(self.predicted_dir, f"{frame_id}_detected.jpg")
         cv2.imwrite(save_path, annotated_img)
         
-        return all_labels, inference_time, save_path
+        return all_labels, inference_time, save_path, all_bboxes  
