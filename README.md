@@ -21,7 +21,7 @@ server for stereo-depth analysis and database updates.
 *The embedded unit (Raspberry Pi 5 + stereo cameras + GPS) runs road segmentation
 and object detection on-device. Only flagged frames are sent to the server, which
 handles classification (YOLO), stereo-vision depth/volume estimation, and database
-storage. Results are displayed on a map via the mobile app.The full project presentation is available here: **[Project Clear Road — Slides (PDF)](./figures/PFE.pdf)** *
+storage. Results are displayed on a map via the mobile app.The full project presentation is available here: **[Project Clear Road — Slides (PDF)](./figures/PFE.pdf)***
 
 ## Architecture
 
