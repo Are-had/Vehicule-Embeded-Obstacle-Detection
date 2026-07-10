@@ -2,21 +2,26 @@
 
 ## Project Overview
 
-This project implements a decentralized, crowd-sourced road safety system similar to Waze, but automated. The goal is to detect hazardous road obstacles (debris, fallen logs, rocks) using on-device computer vision in real-time.
+This project implements a decentralized, crowd-sourced road safety system similar
+to Waze, but automated. The goal is to detect hazardous road obstacles (debris,
+fallen logs, rocks) using on-device computer vision in real-time.
 
-This repository focuses on the **Embedded Detection Module**: a lightweight, power-optimized system running inside the vehicle. It processes a video stream to filter out "normal" scenery and flags only frames containing verified obstacles hindering the drivable path. These positive candidates are transmitted to a remote server for stereo-depth analysis and database updates.
+This repository focuses on the **Embedded Detection Module**: a lightweight,
+power-optimized system running inside the vehicle. It processes a video stream to
+filter out "normal" scenery and flags only frames containing verified obstacles
+hindering the drivable path. These positive candidates are transmitted to a remote
+server for stereo-depth analysis and database updates.
 
-## Team
+### Module Architecture
 
-- **Arezki Haddouche**: Depth Estimation, Connectivity (GPS/4G).
+<p align="center">
+  <img src="figures/architecture.png" width="85%">
+</p>
 
-- **Massyl Adjal**: Embedded AI, Computer Vision, Model Optimization.
-
-- **Ghiles Redjdal**: Cloud AI Pipeline, Model Fine-tuning & Data Engineering.
-
-- **Imad Bafou**: Database Management,  Documentation.
-
-- **Raid Benoudina**: Android Application, User Interface. 
+*The embedded unit (Raspberry Pi 5 + stereo cameras + GPS) runs road segmentation
+and object detection on-device. Only flagged frames are sent to the server, which
+handles classification (YOLO), stereo-vision depth/volume estimation, and database
+storage. Results are displayed on a map via the mobile app.The full project presentation is available here: **[Project Clear Road — Slides (PDF)](./figures/PFE.pdf)** *
 
 ## Architecture
 
