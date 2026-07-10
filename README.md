@@ -112,8 +112,9 @@ The low error confirms the disparity is reliable enough for metric depth estimat
 
 
 
+## Third Module : Detection & Classification Pipeline
 
-#### 2.Detection & Classification Pipeline
+
 
 The detection logic follows a strict "Filter-then-Flag" approach to minimize bandwidth usage.
 
