@@ -57,6 +57,62 @@ The system operates on a client-server model:
 
 - **Constraints**: High Obstacle Variety, Low latency, strict memory budget, optimized power consumption.
 
+
+
+## Second Module : Stereo Depth Estimation
+
+Once a hazard is flagged and confirmed server-side, this module estimates its
+**real-world distance and dimensions** from the synchronized stereo pair captured
+by the vehicle. This turns a 2D detection into an actionable geolocated hazard
+(distance-to-obstacle + estimated size) used downstream for severity scoring.
+
+### Key Technical Contributions
+
+- **Stereo Rig Calibration**: Full intrinsic/extrinsic calibration of the dual-camera
+  setup (checkerboard) to recover focal length, principal point, distortion
+  coefficients and the stereo baseline (T ≈ 0.80 m).
+- **Epipolar Rectification**: Rectified the stereo pair so disparity search reduces
+  to a 1D horizontal problem.
+- **Disparity Validation & Metric Depth**: Computed disparity with SGBM and
+  validated it against ground-truth disparity on the **Lost & Found** test set
+  (MAE = 0.64 px, 4.5% bad pixels) before converting to metric depth via
+  `Z = f·B / d`. Bounding-box geometry is then back-projected at depth `Z` to
+  estimate the obstacle's real-world size.
+
+### Pipeline
+
+1. **Input**: Rectified stereo pair (left/right) + hazard bounding box from Module 1.
+2. **Disparity Estimation**: SGBM produces a per-pixel disparity map `d(x, y)`.
+3. **Depth Reconstruction**: `Z = (f · B) / d` for each valid pixel.
+4. **Obstacle Localization**: Median depth inside the bounding box → robust
+   distance-to-hazard (median rejects background/outlier disparities).
+5. **Size Estimation**: Bounding-box dimensions back-projected at depth `Z`.
+
+### Validation (Lost & Found test set)
+
+The estimated SGBM disparity was compared against ground-truth disparity.
+
+| **Metric**               | **Value**  |
+| ------------------------ | ---------- |
+| Disparity MAE            | 0.64 px    |
+| Bad pixels               | 4.5 %      |
+| Depth range (Z)          | 0 – 50 m   |
+| Baseline (B)             | ~0.80 m    |
+
+<p align="center">
+  <img src="figures/depth_validation.png" width="90%">
+</p>
+
+*Top: left/right input, estimated disparity (SGBM), and reconstructed depth Z.
+Bottom: ground-truth disparity and absolute error map (MAE = 0.64 px, Bad = 4.5%).
+The low error confirms the disparity is reliable enough for metric depth estimation.*
+
+
+
+
+
+
+
 #### 2. The AI Pipeline
 
 The detection logic follows a strict "Filter-then-Flag" approach to minimize bandwidth usage.
