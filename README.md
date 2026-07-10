@@ -113,7 +113,7 @@ The low error confirms the disparity is reliable enough for metric depth estimat
 
 
 
-#### 2. The AI Pipeline
+#### 2.Detection & Classification Pipeline
 
 The detection logic follows a strict "Filter-then-Flag" approach to minimize bandwidth usage.
 
